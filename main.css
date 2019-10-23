@@ -7,3 +7,7 @@ img {
 a {
     text-decoration: none;
 }
+.top_link{
+    text-align: right;
+    font-size: 1.5em;
+}
