@@ -2,151 +2,115 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<title>ap-wp-pligin</title>
-				<link rel="stylesheet" href="https://stackedit.io/style.css" />
-			</head>
-			<body class="stackedit">
-				<div class="stackedit__html">
-					<h1 id="agency-pilot---wordpress-plugin">Agency Pilot - Wordpress Plugin</h1>
-					<p>
-						<strong>Alcium Software LTC.</strong>
-					</p>
-					<h2 id="purpose-of-this-documentation">1.1 Purpose of this documentation</h2>
-					<p>This document is to give insights of our plugin to the user of our plugin so it can help them further their wordpress website. This document also provides details into how to set up the cPanel so that the data import is smooth. The web developers can use this document to get a better understanding of the data types and structure of the imported data.</p>
-					<h2 id="software-lisence">1.2 Software Lisence</h2>
-					<blockquote>
-						<p>
-							<strong>Note:</strong> This plugin is a 
-							<strong>Proprietary Software 👼</strong>.
-						</p>
-					</blockquote>
-					<h2 id="document-overview">1.3 Document overview</h2>
-					<p>
-						<a href="#requirements">2.1 Requirements</a>
-						<br>
-							<a href="#design">2.2 Design</a>
-							<br>
-								<a href="#implementation">2.3 Implementation</a>
-								<br>
-									<a href="#cron-jobs">2.4 CRON Jobs</a>
-									<br>
-										<a href="#updates">2.5 Updates</a>
-									</p>
-									<h2 id="requirements">2.1 Requirements</h2>
-									<p>In order to run the plugin smoothly you have to set your wordpress database execution time to be a number that is higher than 10 minutes (600+ seconds).
-										<br>
-One way of setting this to add or edit the 
-											<strong>
-												<em>set_time_timit</em>
-											</strong> in 
-											<strong>
-												<em>wp-config.php</em>
-											</strong> in the wordpress root folder.
-										</p>
-										<pre class=" language-php"><code class="prism  language-php"><span class="token comment">//Setting max execute timer to be 900 seconds as mapping of data takes more than 30 seconds. </span>
-<span class="token function">_set_time_limit</span><span class="token punctuation">(</span><span class="token number">900</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-										<p>If your web-host is blocks this by default then contact your hosting company so the data integrity can be maintained.</p>
-										<p>
-											<a href="#agency-pilot---wordpress-plugin"> 🔝 </a>
-										</p>
-										<h2 id="design">2.2 Design</h2>
-										<p>Design is very minimal in this plugin as it is mainly aimed at making the import process easier for our clients.</p>
-										<h4 id="step-01">Step 01:</h4>
-										<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;There are authentication fields where the details of the client are entered, this is confidential so keep it safe and secure. These authentication credentials are used to gain access to our API.</p>
-										<h4 id="step-02">Step 02:</h4>
-										<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This step contains a button, when clicked, checks through your details and then imports and map the data into your wordpress database. The structure of the database depends on your choice on the step 01.</p>
-										<h4 id="step-03">Step 03:</h4>
-										<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This section contains a button called 
-											<strong>
-												<em>update properties</em>
-											</strong> which on click will fetch all the properties which have been changed on the day and update them in the database.
-										</p>
-										<p>
-											<a href="#agency-pilot---wordpress-plugin"> 🔝 </a>
-										</p>
-										<h2 id="implementation">2.3 Implementation</h2>
-										<p>Get your agency pilot authentication, you will also receive a zipped folder which contains the plugin. The content of the zipped file is then to be placed within your wordpress plugin folder. You can use an FTP client such as 
-											<strong>
-												<em>FileZilla</em>
-											</strong> to do this.
-										</p>
-										<p>
-											<img src="assets/img/filezilla-tree.png" alt="FileZilla Document Tree">
-											</p>
-											<p>Once  transfer of folder completes you can navigate to wordpress dashboard. And then go into plugins menu, you should see 
-												<strong>
-													<em>Agency Pilot Plugin</em>
-												</strong> in the list of plugins.
-											</p>
-											<p>
-												<img src="assets/img/wp-plugin-list.png" alt="Wordpress Plugin List">
-												</p>
-												<p>Click 
-													<strong>
-														<em>Activate</em>
-													</strong> to active the plugin, once you active you should see 
-													<strong>
-														<em>Agency Pilot</em>
-													</strong> on your dashboard side menu.
-												</p>
-												<p>
-													<img src="assets/img/wp-plugin-dashboard.png" alt="Wordpress Plugin Dashboard" align="middle">
-													</p>
-													<p>When you navigate into the plugin, you’ll be asked to enter some authentication credentials agency pilot have provided for you. Here are the basic credentials you expect to have in order to use the plugin.</p>
-													<p>
-														<img src="pages-assets/img/wp-plugin-ini.png" alt="Wordpress Plugin Initial">
-														</p>
-														<p>For the first time that the plugin is activated you need to click the 
-															<strong>
-																<em>Get Properties</em>
-															</strong> in order to get the data initially. Moreover, when you wish to change the data structure then you need to click to 
-															<strong>
-																<em>update</em>
-															</strong> and the 
-															<strong>
-																<em>Get Properties.</em>
-															</strong> If you wish to edit your credentials then you can do that by clicking 
-															<strong>
-																<em>Edit Your Details.</em>
-															</strong>
-														</p>
-														<blockquote>
-															<p>
-																<strong>Note:</strong> You’ll be prompted with essential steps that have been taken by the plugin. i.e 
-																<strong>Auth token fetched</strong>.
-															</p>
-														</blockquote>
-														<p>
-															<a href="#agency-pilot---wordpress-plugin"> 🔝 </a>
-														</p>
-														<h2 id="cron-jobs">2.4 CRON Jobs</h2>
-														<p>There are currently 2 CRON jobs with our plugin.</p>
-														<ol>
-															<li>First CRON job is to update any properties which has been updated at source, this job carries out every hour and update the properties.</li>
-															<li>Second CRON job is to do a full data update on your database which carries out every week.</li>
-														</ol>
-														<blockquote>
-															<p>
-																<strong>Note:</strong> The 
-																<strong>CRON Jobs</strong> is pre-built meaning you do not have to set anything up however, make sure your web-host allows it.
-															</p>
-														</blockquote>
-														<p>
-															<a href="#agency-pilot---wordpress-plugin"> 🔝 </a>
-														</p>
-														<h2 id="updates">2.5 Updates</h2>
-														<p>If there are any updates for our plugin, we’ll contact the client.</p>
-														<blockquote>
-															<p>
-																<strong>Note:</strong> The 
-																<strong>Database tables</strong> should not be tampered with.
-															</p>
-														</blockquote>
-														<p>
-															<a href="#agency-pilot---wordpress-plugin"> 🔝 </a>
-														</p>
-													</div>
-												</body>
-											</html>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>ap-wp-pligin</title>
+		<link rel="stylesheet" href="https://stackedit.io/style.css" />
+	</head>
+	<body class="stackedit">
+		<div class="stackedit__html">
+			<h1 id="agency-pilot---wordpress-plugin">Agency Pilot - Wordpress Plugin</h1>
+			<p>
+				<strong>Alcium Software LTC.</strong>
+			</p>
+			<h2 id="purpose-of-this-documentation">1.1 Purpose of this documentation</h2>
+			<p>This document is to give insights of our plugin to the user of our plugin so it can help them further their wordpress website. This document also provides details into how to set up the cPanel so that the data import is smooth. The web developers can use this document to get a better understanding of the data types and structure of the imported data.</p>
+
+			<h2 id="software-lisence">1.2 Software Lisence</h2>
+			<blockquote>
+				<p>
+					<strong>Note:</strong> This plugin is a <strong>Proprietary Software 👼</strong>.
+				</p>
+			</blockquote>
+
+			<h2 id="document-overview">1.3 Document overview</h2>
+			<p>
+				<a href="#requirements">2.1 Requirements</a>
+				<br>
+				<a href="#design">2.2 Design</a>
+				<br>
+				<a href="#implementation">2.3 Implementation</a>
+				<br>
+				<a href="#cron-jobs">2.4 CRON Jobs</a>
+				<br>
+				<a href="#updates">2.5 Updates</a>
+			</p>
+
+			<h2 id="requirements">2.1 Requirements</h2>
+			<p>In order to run the plugin smoothly you have to set your wordpress database execution time to be a number that is higher than 10 minutes (600+ seconds).
+				<br>
+				One way of setting this to add or edit the 
+				<strong><em>set_time_timit</em></strong> in <strong><em>wp-config.php</em></strong> in the wordpress root folder.
+			</p>
+
+<pre class=" language-php"><code class="prism  language-php"><span class="token comment">//Setting max execute timer to be 900 seconds as mapping of data takes more than 30 seconds. </span>
+<span class="token function">_set_time_limit</span><span class="token punctuation">(</span><span class="token number">900</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+			<p>If your web-host is blocks this by default then contact your hosting company so the data integrity can be maintained.</p>
+			<p>
+				<a href="#agency-pilot---wordpress-plugin"> 🔝 </a>
+			</p>
+
+			<h2 id="design">2.2 Design</h2>
+			<p>Design is very minimal in this plugin as it is mainly aimed at making the import process easier for our clients.</p>
+			<h4 id="step-01">Step 01:</h4>
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;There are authentication fields where the details of the client are entered, this is confidential so keep it safe and secure. These authentication credentials are used to gain access to our API.</p>
+			<h4 id="step-02">Step 02:</h4>
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This step contains a button, when clicked, checks through your details and then imports and map the data into your wordpress database. The structure of the database depends on your choice on the step 01.</p>
+			<h4 id="step-03">Step 03:</h4>
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This section contains a button called 
+				<strong>
+					<em>update properties</em>
+				</strong> which on click will fetch all the properties which have been changed on the day and update them in the database.
+			</p>
+			<p>
+				<a href="#agency-pilot---wordpress-plugin"> 🔝 </a>
+			</p>
+
+			<h2 id="implementation">2.3 Implementation</h2>
+
+			<p>Get your agency pilot authentication, you will also receive a zipped folder which contains the plugin. The content of the zipped file is then to be placed within your wordpress plugin folder. You can use an FTP client such as <strong><em>FileZilla</em></strong> to do this.</p>
+
+			<p>
+				<img src="pages-assets/filezilla-tree.png" alt="FileZilla Document Tree">
+			</p>
+
+			<p>Once  transfer of folder completes you can navigate to wordpress dashboard. And then go into plugins menu, you should see <strong><em>Agency Pilot Plugin</em></strong> in the list of plugins.</p><p><img src="pages-assets/wp-plugin-list.png" alt="Wordpress Plugin List"></p>
+
+			<p>Click <strong><em>Activate</em></strong> to active the plugin, once you active you should see <strong><em>Agency Pilot</em></strong> on your dashboard side menu.</p>
+			<p><img src="pages-assets/wp-plugin-dashboard.png" alt="Wordpress Plugin Dashboard"></p>
+
+			<p>When you navigate into the plugin, you’ll be asked to enter some authentication credentials agency pilot have provided for you. Here are the basic credentials you expect to have in order to use the plugin.</p>
+
+			<p><img src="pages-assets/wp-plugin-ini.png" alt="Wordpress Plugin Initial"></p>
+
+			<p>For the first time that the plugin is activated you need to click the <strong><em>Get Properties</em></strong> in order to get the data initially. Moreover, when you wish to change the data structure then you need to click to <strong><em>update</em></strong> and the <strong><em>Get Properties.</em></strong> If you wish to edit your credentials then you can do that by clicking <strong><em>Edit Your Details.</em></strong></p>
+			<blockquote>
+				<p>
+					<strong>Note:</strong> You’ll be prompted with essential steps that have been taken by the plugin. i.e <strong>Auth token fetched</strong>.
+				</p>
+			</blockquote>
+
+			<p><a href="#agency-pilot---wordpress-plugin"> 🔝 </a></p>
+
+			<h2 id="cron-jobs">2.4 CRON Jobs</h2>
+			<p>There are currently 2 CRON jobs with our plugin.</p>
+			<ol>
+				<li>First CRON job is to update any properties which has been updated at source, this job carries out every hour and update the properties.</li>
+				<li>Second CRON job is to do a full data update on your database which carries out every week.</li>
+			</ol>
+
+			<blockquote>
+				<p><strong>Note:</strong> The <strong>CRON Jobs</strong> is pre-built meaning you do not have to set anything up however, make sure your web-host allows it.</p>
+			</blockquote>
+
+			<p><a href="#agency-pilot---wordpress-plugin"> 🔝 </a></p>
+
+			<h2 id="updates">2.5 Updates</h2>
+			<p>If there are any updates for our plugin, we’ll contact the client.</p>
+			<blockquote>
+				<p><strong>Note:</strong> The <strong>Database tables</strong> should not be tampered with.</p>
+			</blockquote>
+			<p> <a href="#agency-pilot---wordpress-plugin"> 🔝 </a></p>
+		</div>
+	</body>
+</html>
